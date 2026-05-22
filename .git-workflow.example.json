@@ -1,0 +1,12 @@
+{
+  "strategy": "github-flow",
+  "baseBranch": "main",
+  "developBranch": "develop",
+  "branchPrefix": true,
+  "commitConvention": "conventional",
+  "autoStash": true,
+  "autoPullRebase": true,
+  "prTemplate": true,
+  "protectedBranches": ["main"],
+  "customTypes": ["feature", "feat", "bugfix", "fix", "hotfix", "release", "chore"]
+}
