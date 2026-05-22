@@ -346,7 +346,20 @@ Clients must authenticate before making any request.
 
 ## Step 5: Preparing the PR
 
-After all changes are committed, offer to prepare a Pull Request description.
+After all changes are committed, check how many commits are on the branch:
+
+```bash
+git log main..HEAD --oneline
+```
+
+**If there is more than one commit**, pause and ask before generating the PR:
+
+> Branch `feat/your-branch` has N commits. Anything else you'd like to add
+> before I prepare the PR?
+
+Wait for the user's answer. If they have more work, continue making changes and
+committing. If they say no (or there is only one commit), proceed immediately to
+generate the PR description — do not ask again.
 
 **PR Description Template:**
 
@@ -465,6 +478,7 @@ For every code-change task, follow this sequence:
 □ Pull/rebase base branch
 □ Create properly-named branch from correct base
 □ Make changes with atomic Conventional Commits
+□ If more than one commit: ask if there's anything else before the PR
 □ Offer PR description
 □ Remind about stashed changes if any
 ```
