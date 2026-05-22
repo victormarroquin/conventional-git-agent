@@ -287,6 +287,48 @@ The developer gets a clean branch, a clear commit history, and a ready-to-review
 
 ---
 
+## Testing
+
+The project uses [bats-core](https://github.com/bats-core/bats-core) for testing `install.sh` and
+validating the structure of `SKILL.md`. CI runs on every push and PR via GitHub Actions.
+
+### Install dependencies
+
+**bats-core**
+
+| OS | Command |
+|---|---|
+| macOS | `brew install bats-core` |
+| Ubuntu / Debian | `sudo apt-get install bats` |
+| Other Linux | `git clone https://github.com/bats-core/bats-core.git && sudo ./bats-core/install.sh /usr/local` |
+| Any (npm) | `npm install -g bats` |
+
+**shellcheck** (optional, for linting `install.sh`)
+
+| OS | Command |
+|---|---|
+| macOS | `brew install shellcheck` |
+| Ubuntu / Debian | `sudo apt-get install shellcheck` |
+| Other Linux | [Download from GitHub releases](https://github.com/koalaman/shellcheck/releases) |
+
+### Run the tests
+
+```bash
+# All tests
+bats tests/
+
+# Only installer tests
+bats tests/install.bats
+
+# Only skill structure tests
+bats tests/skill.bats
+
+# Lint the installer
+shellcheck install.sh
+```
+
+---
+
 ## Contributing
 
 Contributions are welcome! If you want to improve the skill, add support for more strategies, or fix an issue:
