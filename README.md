@@ -127,7 +127,7 @@ Just copy and paste it — no editing needed.
 ### Quick Install (One-liner)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/conventional-git-agent/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/victormarroquin/conventional-git-agent/main/install.sh | bash
 ```
 
 This auto-detects which AI agents you have and installs for all of them.
@@ -135,7 +135,7 @@ This auto-detects which AI agents you have and installs for all of them.
 ### Install for a Specific Agent
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/conventional-git-agent/main/install.sh | bash -s -- --ai claude
+curl -fsSL https://raw.githubusercontent.com/victormarroquin/conventional-git-agent/main/install.sh | bash -s -- --ai claude
 ```
 
 Supported agents: `claude`, `cursor`, `windsurf`, `copilot`, `codex`, `gemini`, `opencode`, `kiro`, `trae`, `qoder`, `rovodev`, `pi`, `all`
@@ -143,7 +143,7 @@ Supported agents: `claude`, `cursor`, `windsurf`, `copilot`, `codex`, `gemini`, 
 ### Install from Cloned Repo
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/conventional-git-agent.git
+git clone https://github.com/victormarroquin/conventional-git-agent.git
 cd conventional-git-agent
 ./install.sh --ai claude        # Specific agent
 ./install.sh --ai all           # All agents

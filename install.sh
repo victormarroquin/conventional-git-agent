@@ -4,7 +4,7 @@
 # Installs the git workflow skill for your AI coding agent(s).
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/conventional-git-agent/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/victormarroquin/conventional-git-agent/main/install.sh | bash
 #
 #   Or clone the repo and run:
 #   ./install.sh [options]
@@ -31,8 +31,8 @@ NC='\033[0m' # No Color
 
 # ── Config ───────────────────────────────────────────────────────
 SKILL_NAME="conventional-git-agent"
-REPO_URL="https://github.com/YOUR_USERNAME/conventional-git-agent"
-RAW_BASE="https://raw.githubusercontent.com/YOUR_USERNAME/conventional-git-agent/main"
+REPO_URL="https://github.com/victormarroquin/conventional-git-agent"
+RAW_BASE="https://raw.githubusercontent.com/victormarroquin/conventional-git-agent/main"
 SKILL_FILES=(
   "skills/conventional-git-agent/SKILL.md"
   "skills/conventional-git-agent/references/strategies.md"
