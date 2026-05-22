@@ -126,6 +126,10 @@ cd conventional-git-agent
 ./install.sh                    # Auto-detect
 ```
 
+> **Note:** `.claude/` (and equivalent agent dirs) are gitignored in this repo.
+> `skills/` is the single source of truth. Run `install.sh` after cloning to
+> activate the skill locally for your agent(s).
+
 ### Global Install (All Projects)
 
 ```bash
