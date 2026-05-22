@@ -387,10 +387,19 @@ After all changes are committed, check how many commits are on the branch:
 git log main..HEAD --oneline
 ```
 
-**If there is more than one commit**, pause and ask before generating the PR:
+**If there is more than one commit**, pause before generating the PR. First,
+synthesize a brief human-readable summary of the work done — one or two sentences
+in plain language, not a list of commit messages. Then ask:
 
-> Branch `feat/your-branch` has N commits. Anything else you'd like to add
-> before I prepare the PR?
+> Here's what we've done so far on `feat/your-branch`:
+> [1-2 sentence human summary of the work, e.g. "Added JWT authentication:
+> a login endpoint, test coverage, and updated the docs to reflect the new flow."]
+>
+> Anything else before I prepare the PR?
+
+The summary should describe *what* was accomplished and *why it matters*, not
+just echo the commit messages back. Use the commits as input, but write it as
+you would explain it to a teammate.
 
 Wait for the user's answer. If they have more work, continue making changes and
 committing. If they say no (or there is only one commit), proceed immediately to
