@@ -46,6 +46,10 @@ Before touching any code:
 - Fetches the latest from remote
 - Pulls/rebases the base branch to avoid working on stale code
 - Stops and alerts the developer if there are merge conflicts
+- **Validates git author identity** — checks that `user.name` and `user.email`
+  are set and look legitimate before creating any commit. Catches missing values,
+  system-username-style names, and auto-generated emails (e.g. `user@MacBook-Pro.local`).
+  If invalid, the agent stops and guides you to fix it with `git config --global`.
 
 ### 3. 🌿 Create Branches (Conventional Branch)
 

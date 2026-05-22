@@ -103,6 +103,10 @@ git remote -v && git fetch --all --prune 2>/dev/null
 
 # 5. Is current branch up to date with its upstream?
 git status -uno
+
+# 6. Validate git author identity
+git config user.name
+git config user.email
 ```
 
 **If the working tree is dirty** (uncommitted changes exist):
@@ -115,6 +119,52 @@ git status -uno
 - Run `git pull --rebase` on the base branch before creating a new branch
 - If rebase has conflicts, stop and tell the user — don't try to resolve merge
   conflicts automatically
+
+**If the git author identity is missing or invalid:**
+
+Run `git config user.name` and `git config user.email` and validate both values
+before proceeding. Stop and ask the user to fix the config if any check fails.
+
+| Check | Command | Invalid if |
+|---|---|---|
+| Name is set | `git config user.name` | empty or exit code 1 |
+| Name looks real | — | matches system username pattern (no spaces, all lowercase like `johnsmith`) |
+| Email is set | `git config user.email` | empty or exit code 1 |
+| Email format valid | — | missing `@`, no domain, no TLD |
+| Email not auto-generated | — | ends in `.local`, matches `username@hostname` pattern |
+
+**Detection examples:**
+
+| Value | Valid | Reason |
+|---|---|---|
+| `Jane Smith` | ✅ | Real name with space |
+| `jansmith` | ❌ | Looks like a system username, no spaces |
+| `jane@example.com` | ✅ | Valid email |
+| `jane@company.co.uk` | ✅ | Valid email with multi-part TLD |
+| `jane@MacBook-Pro.local` | ❌ | Auto-generated hostname |
+| `jansmith@Jansmith-MBP.local` | ❌ | Auto-generated hostname |
+| `jane` | ❌ | No `@` — not an email |
+| `` (empty) | ❌ | Not configured |
+
+**If identity is invalid, stop and tell the user:**
+
+> Your git author identity needs to be configured before I create any commits.
+> Git is currently using an auto-generated value that will produce a warning on
+> every commit and may be rejected by some remote hooks.
+>
+> Run these two commands to fix it:
+> ```bash
+> git config --global user.name "Your Full Name"
+> git config --global user.email "you@example.com"
+> ```
+> Or, to set it only for this repo:
+> ```bash
+> git config user.name "Your Full Name"
+> git config user.email "you@example.com"
+> ```
+> Let me know once it's set and I'll continue.
+
+Do not proceed until the user confirms the identity is configured correctly.
 
 ---
 
@@ -410,6 +460,7 @@ For every code-change task, follow this sequence:
 □ Detect git repo
 □ Identify branching strategy (or ask)
 □ Run pre-flight checks (clean tree, fetch, up-to-date)
+□ Validate git author identity (name and email) — stop if invalid
 □ Stash dirty changes if needed
 □ Pull/rebase base branch
 □ Create properly-named branch from correct base
