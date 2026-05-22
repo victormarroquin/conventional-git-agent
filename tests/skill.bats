@@ -74,6 +74,28 @@ STRATEGIES_FILE="${BATS_TEST_DIRNAME}/../skills/conventional-git-agent/reference
   grep -q "release" "$SKILL_FILE"
 }
 
+# ── Ticket integration ───────────────────────────────────────────
+
+@test "SKILL.md documents ticketTracker config field" {
+  grep -q "ticketTracker" "$SKILL_FILE"
+}
+
+@test "SKILL.md documents ticketPrefix config field" {
+  grep -q "ticketPrefix" "$SKILL_FILE"
+}
+
+@test "SKILL.md documents Jira ticket branch format" {
+  grep -q "proj-123" "$SKILL_FILE"
+}
+
+@test "SKILL.md documents Linear ticket branch format" {
+  grep -q "eng-456" "$SKILL_FILE"
+}
+
+@test "SKILL.md documents automatic Refs footer for tickets" {
+  grep -q "Refs: PROJ-123" "$SKILL_FILE"
+}
+
 # ── Frontmatter ───────────────────────────────────────────────────
 
 @test "SKILL.md has frontmatter with name field" {
