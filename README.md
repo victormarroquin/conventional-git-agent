@@ -95,7 +95,7 @@ This gives you the chance to add more changes, fix something you noticed, or
 say no and get the PR description immediately. For single-commit branches the
 agent skips the question and goes straight to the PR.
 
-After all changes are committed, the agent generates a PR description from the actual commits:
+After all changes are committed, the agent generates a PR description from the actual commits, then produces a short **review request message** ready to paste into Slack, Linear, Jira, or wherever your team communicates:
 
 ```markdown
 ## Summary
@@ -108,6 +108,17 @@ Added JWT-based authentication with token refresh...
 ## Related Issues
 Refs: #234
 ```
+
+Then, without prompting, the agent generates a review request message:
+
+```
+Hey team! 👋 PR ready for review:
+Add JWT token refresh so sessions auto-renew before expiration
+https://github.com/org/repo/pull/42
+~5 min review
+```
+
+Just copy and paste it — no editing needed.
 
 ---
 
