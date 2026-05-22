@@ -63,12 +63,35 @@ Valid types: `feature`/`feat`, `bugfix`/`fix`, `hotfix`, `release`, `chore`
 
 ```
 feat/add-user-authentication    ✅
-fix/issue-123-null-pointer      ✅
+feat/proj-123-add-login         ✅ (Jira ticket)
+fix/eng-456-null-pointer        ✅ (Linear ticket)
+feat/issue-789-add-login        ✅ (GitHub issue)
 hotfix/security-patch           ✅
 release/v2.1.0                  ✅
 refactor/extract-utils          ❌ (not a valid branch type)
 Feature/Add-Login               ❌ (uppercase not allowed)
 ```
+
+If your team uses Jira, Linear, or GitHub Issues, the agent prompts for a ticket
+number before creating the branch and automatically adds it to every commit footer:
+
+```
+feat(auth): add login page
+
+Refs: PROJ-123
+```
+
+Configure it in `.git-workflow.json`:
+
+```json
+{
+  "ticketTracker": "jira",
+  "ticketPrefix": "PROJ"
+}
+```
+
+Supported trackers: `jira`, `linear`, `github`. The ticket prompt is optional —
+press Enter to skip it and the branch is created without a ticket ID.
 
 ### 4. 📝 Commit with Conventional Commits
 

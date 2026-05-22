@@ -208,7 +208,7 @@ The spec defines an ABNF grammar. In practice, these are the rules to follow:
 4. **No leading or trailing hyphens/dots** — `feat/add-login` not `feat/-add-login`
 5. **No spaces or special characters** — only `a-z`, `0-9`, `-`, and `.`
 6. **Dots only for version numbers** in release branches — `release/v1.2.0`
-7. **Include ticket numbers when available** — `feat/issue-123-new-login`
+7. **Include ticket number when there is one** — place it right after the type, before the description: `feat/proj-123-add-login`
 
 ### Validation
 
@@ -258,6 +258,40 @@ git branch --show-current
 The base branch depends on the strategy — see `references/strategies.md` for
 which base to use (main vs develop) for each type in each strategy.
 
+### Ticket Number Integration
+
+If `ticketTracker` is set in `.git-workflow.json`, or if the user mentions a
+ticket number in their request, ask before creating the branch:
+
+> Is there a ticket number for this? (e.g. PROJ-123 — press Enter to skip)
+
+**If the user provides one:**
+- Lowercase the ticket ID and insert it between the type and the description
+- Store the original-case ticket ID to use in commit footers later
+
+| Tracker | User input | Branch name |
+|---|---|---|
+| Jira | `PROJ-123` | `feat/proj-123-add-login` |
+| Linear | `ENG-456` | `fix/eng-456-null-pointer` |
+| GitHub Issues | `#789` or `789` | `feat/issue-789-add-login` |
+
+**If the user skips (presses Enter):** create the branch without a ticket ID — never block on this.
+
+**Auto-detect from the request:** if the user says something like *"fix the bug from PROJ-123"*
+or *"work on ENG-456"*, extract the ticket ID automatically and skip the prompt.
+
+**Ticket reference in commits:** once a ticket ID is captured, include it in every
+commit footer on this branch:
+
+```
+feat(auth): add login page
+
+Refs: PROJ-123
+```
+
+For GitHub Issues use `Closes: #789` if the commit resolves the issue, or
+`Refs: #789` if it only relates to it.
+
 ### Tooling Recommendation
 
 If the user wants CI enforcement of branch names, recommend:
@@ -295,7 +329,8 @@ Every commit message follows this structure:
 - Description in imperative mood: "add login endpoint" not "added login endpoint"
 - First line under 72 characters
 - Body explains *why*, not just *what* (the diff shows what)
-- Reference issues in footers: `Refs: #123` or `Closes: #456`
+- Reference issues in footers: `Refs: #123`, `Closes: #456`, `Refs: PROJ-123`, `Refs: ENG-456`
+- If a ticket was captured in Step 3, add it to every commit footer on this branch automatically
 
 **Breaking changes:**
 - Add `!` after the type: `feat(api)!: change response format`
@@ -352,10 +387,19 @@ After all changes are committed, check how many commits are on the branch:
 git log main..HEAD --oneline
 ```
 
-**If there is more than one commit**, pause and ask before generating the PR:
+**If there is more than one commit**, pause before generating the PR. First,
+synthesize a brief human-readable summary of the work done — one or two sentences
+in plain language, not a list of commit messages. Then ask:
 
-> Branch `feat/your-branch` has N commits. Anything else you'd like to add
-> before I prepare the PR?
+> Here's what we've done so far on `feat/your-branch`:
+> [1-2 sentence human summary of the work, e.g. "Added JWT authentication:
+> a login endpoint, test coverage, and updated the docs to reflect the new flow."]
+>
+> Anything else before I prepare the PR?
+
+The summary should describe *what* was accomplished and *why it matters*, not
+just echo the commit messages back. Use the commits as input, but write it as
+you would explain it to a teammate.
 
 Wait for the user's answer. If they have more work, continue making changes and
 committing. If they say no (or there is only one commit), proceed immediately to
@@ -450,7 +494,9 @@ agent's behavior. This avoids the initial questions on every new conversation.
   "autoPullRebase": true,
   "prTemplate": true,
   "protectedBranches": ["main", "develop"],
-  "customTypes": ["feature", "feat", "bugfix", "fix", "hotfix", "release", "chore"]
+  "customTypes": ["feature", "feat", "bugfix", "fix", "hotfix", "release", "chore"],
+  "ticketTracker": "jira",
+  "ticketPrefix": "PROJ"
 }
 ```
 
@@ -466,6 +512,8 @@ agent's behavior. This avoids the initial questions on every new conversation.
 | `prTemplate` | Generate PR descriptions | `true` |
 | `protectedBranches` | Branches to never commit directly on | `["main"]` |
 | `customTypes` | Allowed commit/branch types | standard set |
+| `ticketTracker` | `"jira"`, `"linear"`, or `"github"` — activates ticket prompt | `null` (disabled) |
+| `ticketPrefix` | Expected ticket prefix (e.g. `"PROJ"`, `"ENG"`) for validation | `null` |
 
 If the config file exists, use it. If it doesn't, detect the strategy and offer
 to create one:
