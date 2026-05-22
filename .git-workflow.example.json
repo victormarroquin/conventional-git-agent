@@ -8,5 +8,7 @@
   "autoPullRebase": true,
   "prTemplate": true,
   "protectedBranches": ["main"],
-  "customTypes": ["feature", "feat", "bugfix", "fix", "hotfix", "release", "chore"]
+  "customTypes": ["feature", "feat", "bugfix", "fix", "hotfix", "release", "chore"],
+  "ticketTracker": "jira",
+  "ticketPrefix": "PROJ"
 }
