@@ -400,6 +400,38 @@ Then tell the user:
 > git push -u origin feat/add-user-authentication
 > ```
 
+After the PR is created, generate a short review request message the user can
+copy and paste into Slack, Linear, Jira, or wherever their team communicates.
+Do not offer to merge — in most workflows the PR goes through a review and
+approval process before merging.
+
+**Review request message format:**
+
+```
+Hey team! 👋 PR ready for review:
+[one-line summary of what the PR does]
+[PR URL]
+~[estimated review time: small = <5 min, medium = 5–15 min, large = 15+ min]
+```
+
+Estimate review time based on the number of files and commits:
+- **Small** — 1–2 files, 1–2 commits
+- **Medium** — 3–10 files, 3–5 commits
+- **Large** — 10+ files or 6+ commits
+
+**Example output to show the user:**
+
+> Here's a message you can send to request a review:
+>
+> ```
+> Hey team! 👋 PR ready for review:
+> Add JWT token refresh endpoint so sessions auto-renew before expiration
+> https://github.com/org/repo/pull/42
+> ~5 min review
+> ```
+>
+> Adjust the URL and summary if needed, then paste it into Slack, Linear, Jira, or wherever your team reviews PRs.
+
 ---
 
 ## Config File Reference
@@ -480,6 +512,7 @@ For every code-change task, follow this sequence:
 □ Make changes with atomic Conventional Commits
 □ If more than one commit: ask if there's anything else before the PR
 □ Offer PR description
+□ Generate review request message (Slack/Linear/Jira-ready, copy-paste)
 □ Remind about stashed changes if any
 ```
 
