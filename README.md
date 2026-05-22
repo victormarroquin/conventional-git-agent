@@ -86,6 +86,15 @@ The agent commits atomically (one logical change per commit) and uses the impera
 
 ### 5. 📋 Prepare the PR
 
+When the branch has more than one commit, the agent pauses first and asks:
+
+> Branch `feat/add-search-bar` has 3 commits. Anything else you'd like to add
+> before I prepare the PR?
+
+This gives you the chance to add more changes, fix something you noticed, or
+say no and get the PR description immediately. For single-commit branches the
+agent skips the question and goes straight to the PR.
+
 After all changes are committed, the agent generates a PR description from the actual commits:
 
 ```markdown
